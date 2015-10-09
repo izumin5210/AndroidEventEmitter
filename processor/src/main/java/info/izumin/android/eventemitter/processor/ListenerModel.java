@@ -15,7 +15,7 @@ import info.izumin.android.eventemitter.processor.exception.ListenerIsNotInterfa
 /**
  * Created by izumin on 10/9/15.
  */
-public class EventEmitterModel {
+public class ListenerModel {
     private final Element element;
 
     private final String packageName;
@@ -23,7 +23,7 @@ public class EventEmitterModel {
     private final String className;
     private final List<CallbackModel> callbacks;
 
-    public EventEmitterModel(Element element, Elements elementUtils) {
+    public ListenerModel(Element element, Elements elementUtils) {
         this.element = element;
         this.packageName = elementUtils.getPackageOf(element).getQualifiedName().toString();
         this.originalClassName = element.getSimpleName().toString();
