@@ -25,4 +25,4 @@ deploy:
     - script:
         name: upload to bintray
         code: |
-          gradle bintrayUpload -P$BINTRAY_USER -P$BINTRAY_API_KEY
+          gradle bintrayUpload -PbintrayUser=$BINTRAY_USER -PbintrayKey=$BINTRAY_API_KEY -PdryRun=false
