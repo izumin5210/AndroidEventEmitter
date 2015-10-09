@@ -10,3 +10,13 @@ dependencies {
 
     testCompile 'com.google.testing.compile:compile-testing:0.6'
 }
+
+publish {
+    userOrg = 'izumin5210'
+    groupId = 'info.izumin.android'
+    artifactId = 'eventemitter-compiler'
+    version = VERSION
+    description = 'Generate EventEmitter implementation from Listener interface'
+    website = 'https://github.com/izumin5210/AndroidEventEmitter'
+    licences = ['MIT']
+}

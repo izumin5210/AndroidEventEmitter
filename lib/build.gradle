@@ -4,5 +4,14 @@ sourceCompatibility = JavaVersion.VERSION_1_7
 targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+publish {
+    userOrg = 'izumin5210'
+    groupId = 'info.izumin.android'
+    artifactId = 'eventemitter'
+    version = VERSION
+    description = 'Generate EventEmitter implementation from Listener interface'
+    website = 'https://github.com/izumin5210/AndroidEventEmitter'
+    licences = ['MIT']
 }
