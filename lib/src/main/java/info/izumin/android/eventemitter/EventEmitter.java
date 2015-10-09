@@ -3,7 +3,7 @@ package info.izumin.android.eventemitter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventEmitter<L> {
+public abstract class EventEmitter<L> {
     private List<L> mListeners;
 
     public EventEmitter() {
