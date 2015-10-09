@@ -24,9 +24,9 @@ import info.izumin.android.eventemitter.EventEmitter;
  */
 public class EventEmitterWriter {
 
-    private EventEmitterModel model;
+    private ListenerModel model;
 
-    public EventEmitterWriter(EventEmitterModel model) {
+    public EventEmitterWriter(ListenerModel model) {
         this.model = model;
     }
 

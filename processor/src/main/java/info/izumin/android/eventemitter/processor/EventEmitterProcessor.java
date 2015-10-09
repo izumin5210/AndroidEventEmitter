@@ -45,7 +45,7 @@ public class EventEmitterProcessor extends AbstractProcessor {
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         Set<? extends Element> elements =  roundEnv.getElementsAnnotatedWith(Listener.class);
         for (Element element : elements) {
-            EventEmitterModel model = new EventEmitterModel(element, elementUtils);
+            ListenerModel model = new ListenerModel(element, elementUtils);
             EventEmitterWriter writer = new EventEmitterWriter(model);
             try {
                 writer.write(filer);
