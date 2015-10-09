@@ -22,3 +22,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    def versionMajor = 0
+    def versionMinor = 1
+    def versionPatch = 0
+    def versionBuild = 0
+
+    VERSION = "${versionMajor}.${versionMinor}.${versionPatch}"
+}
