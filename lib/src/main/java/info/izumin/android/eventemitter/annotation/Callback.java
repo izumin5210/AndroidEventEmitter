@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
  * Created by izumin on 10/9/15.
  */
 @Retention(RetentionPolicy.SOURCE)
-@Target(ElementType.TYPE)
-public @interface Listener {
+@Target(ElementType.METHOD)
+public @interface Callback {
 }
