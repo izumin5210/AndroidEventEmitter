@@ -1,0 +1,28 @@
+box: izumin5210/android
+build:
+  steps:
+    - script:
+        name: show base information
+        code: |
+          gradle -v
+          echo $ANDROID_HOME
+          echo $ANDROID_BUILD_TOOLS
+          echo $ANDROID_UPDATE_FILTER
+    - script:
+        name: run gradle test
+        code: |
+          gradle --full-stacktrace -q --project-cache-dir=$WERCKER_CACHE_DIR test
+deploy:
+  steps:
+    - script:
+        name: show base information
+        code: |
+          gradle -v
+    - script:
+        name: build with gradle
+        code: |
+          gradle build
+    - script:
+        name: upload to bintray
+        code: |
+          gradle bintrayUpload
