@@ -25,4 +25,8 @@ public class EventEmitter<L> {
     public void removeAllListeners() {
         mListeners.clear();
     }
+
+    public List<L> getListeners() {
+        return new ArrayList<>(mListeners);
+    }
 }
