@@ -15,6 +15,7 @@ public class CallbackModel {
 
     private final String originalMethodName;
     private final String methodName;
+    private final String methodForOnUiThreadName;
     private final List<? extends VariableElement> paramerters;
 
     public CallbackModel(ExecutableElement element) {
@@ -22,6 +23,7 @@ public class CallbackModel {
         this.originalMethodName = element.getSimpleName().toString();
         validate();
         this.methodName = "emit" + originalMethodName.substring(0, 1).toUpperCase() + originalMethodName.substring(1);
+        this.methodForOnUiThreadName = methodName + "OnUiThread";
         this.paramerters = element.getParameters();
     }
 
@@ -31,6 +33,10 @@ public class CallbackModel {
 
     public String getMethodName() {
         return methodName;
+    }
+
+    public String getMethodForOnUiThreadName() {
+        return methodForOnUiThreadName;
     }
 
     public List<? extends VariableElement> getParamerters() {
