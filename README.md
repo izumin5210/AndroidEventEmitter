@@ -34,12 +34,12 @@ ConnectionEventEmitter emitter = new ConnectionEventEmitter();
 
 emitter.on(connectionListenerImpl);
 
-emitter.onConnect(); // Call onCreate() for all registered listeners
+emitter.emitOnConnect(); // Call onCreate() for all registered listeners
 
 new Thread(new Runnable() {
     @Override
     public void run() {
-        emitter.onConnectOnUiThread() // Call onConnect on UI thread
+        emitter.emitOnConnectOnUiThread() // Call onConnect on UI thread
     }
 });
 ```
