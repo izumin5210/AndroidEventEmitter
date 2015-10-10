@@ -7,8 +7,8 @@
 
 ```groovy
 dependencies {
-    apt 'info.izumin.android:eventemitter-compiler:0.1.0'
-    compile 'info.izumin.android:eventemitter:0.1.0'
+    apt 'info.izumin.android:eventemitter-compiler:0.2.0'
+    compile 'info.izumin.android:eventemitter:0.2.0'
 }
 ```
 
