@@ -27,7 +27,7 @@ publish {
     groupId = 'info.izumin.android'
     artifactId = 'eventemitter-compiler'
     version = VERSION
-    description = 'Generate EventEmitter implementation from Listener interface'
+    description = 'Code generator for info.izumin.android.eventemitter'
     website = 'https://github.com/izumin5210/AndroidEventEmitter'
     licences = ['MIT']
 }
