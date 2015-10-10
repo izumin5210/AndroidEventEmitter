@@ -1,5 +1,7 @@
 package info.izumin.android.eventemitter.processor;
 
+import android.content.Context;
+
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.JavaFile;
@@ -41,6 +43,7 @@ public class EventEmitterWriter {
         return TypeSpec.classBuilder(model.getClassName())
                 .addModifiers(Modifier.PUBLIC)
                 .superclass(createSuperclass().box())
+                .addMethod(createConstructor())
                 .addMethods(createMethodSpecs())
                 .build();
     }
@@ -52,10 +55,19 @@ public class EventEmitterWriter {
         );
     }
 
+    private MethodSpec createConstructor() {
+        return MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(TypeName.get(Context.class), "context")
+                .addCode("super(context);")
+                .build();
+    }
+
     private List<MethodSpec> createMethodSpecs() {
         List<MethodSpec> methodSpecs = new ArrayList<>();
         for (CallbackModel callbackModel : model.getCallbacks()) {
             methodSpecs.add(createMethodSpec(callbackModel));
+            methodSpecs.add(createMethodForOnUiThreadSpec(callbackModel));
         }
         return methodSpecs;
     }
@@ -66,6 +78,15 @@ public class EventEmitterWriter {
                 .returns(TypeName.VOID)
                 .addParameters(createParameters(callbackModel))
                 .addCode(createCode(callbackModel))
+                .build();
+    }
+
+    private MethodSpec createMethodForOnUiThreadSpec(CallbackModel callbackModel) {
+        return MethodSpec.methodBuilder(callbackModel.getMethodForOnUiThreadName())
+                .addModifiers(Modifier.PUBLIC)
+                .returns(TypeName.VOID)
+                .addParameters(createParameters(callbackModel))
+                .addCode(createCodeForOnUiThread(callbackModel))
                 .build();
     }
 
@@ -80,20 +101,35 @@ public class EventEmitterWriter {
     private ParameterSpec createParameter(VariableElement variableElement) {
         return ParameterSpec.builder(
                 TypeName.get(variableElement.asType()),
-                variableElement.getSimpleName().toString()
+                variableElement.getSimpleName().toString(),
+                Modifier.FINAL
         ).build();
     }
 
     private CodeBlock createCode(CallbackModel callbackModel) {
+        return CodeBlock.builder()
+                .add("for (" + model.getOriginalClassName() + " listener : getListeners()) {\n")
+                .add("listener." + callbackModel.getOriginalMethodName() + "(" + getArgsString(callbackModel) + ");\n")
+                .add("}\n")
+                .build();
+    }
+
+    private CodeBlock createCodeForOnUiThread(CallbackModel callbackModel) {
+        return CodeBlock.builder()
+                .add("getHandler().post(new Runnable() {\n")
+                .add("@Override\n")
+                .add("public void run() {\n")
+                .add(callbackModel.getMethodName() + "(" + getArgsString(callbackModel) + ");\n")
+                .add("}\n")
+                .add("});\n")
+                .build();
+    }
+
+    private String getArgsString(CallbackModel callbackModel) {
         StringBuilder argsBuilder = new StringBuilder();
         for (VariableElement variableElement : callbackModel.getParamerters()) {
             argsBuilder.append(variableElement.getSimpleName()).append(",");
         }
-        String args = (argsBuilder.length() == 0) ? "" : argsBuilder.toString().substring(0, argsBuilder.length() - 1);
-        return CodeBlock.builder()
-                .add("for (" + model.getOriginalClassName() + " listener : getListeners()) {\n")
-                .add("listener." + callbackModel.getOriginalMethodName() + "(" + args + ");\n")
-                .add("}\n")
-                .build();
+        return (argsBuilder.length() == 0) ? "" : argsBuilder.toString().substring(0, argsBuilder.length() - 1);
     }
 }

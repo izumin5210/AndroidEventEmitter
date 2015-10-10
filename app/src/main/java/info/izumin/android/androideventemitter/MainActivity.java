@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements TestListener, Vie
             }
         });
 
-        mEmitter = new TestEventEmitter();
+        mEmitter = new TestEventEmitter(this);
 
         mEmitter.addListener(this);
 
@@ -47,13 +47,23 @@ public class MainActivity extends AppCompatActivity implements TestListener, Vie
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(final View v) {
         switch (v.getId()) {
             case R.id.btn1:
                 mEmitter.emitOnClickButton1(v);
                 break;
             case R.id.btn2:
-                mEmitter.emitOnClickButton2(v);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(1000);
+                            mEmitter.emitOnClickButton2OnUiThread(v);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
                 break;
         }
     }

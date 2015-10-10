@@ -1,12 +1,14 @@
 # EventEmitter for Android
 [![wercker status](https://app.wercker.com/status/21e3fb7f70933503c9a9faadba53eeff/s/master "wercker status")](https://app.wercker.com/project/bykey/21e3fb7f70933503c9a9faadba53eeff)
+[![Download](https://api.bintray.com/packages/izumin5210/maven/eventemitter/images/download.svg)](https://bintray.com/izumin5210/maven/eventemitter/_latestVersion)
+[![Download](https://api.bintray.com/packages/izumin5210/maven/eventemitter-compiler/images/download.svg)](https://bintray.com/izumin5210/maven/eventemitter-compiler/_latestVersion)
 
 ## Download
 
 ```groovy
 dependencies {
-    apt 'info.izumin.android:eventemitter-compiler:0.1.0'
-    compile 'info.izumin.android:eventemitter:0.1.0'
+    apt 'info.izumin.android:eventemitter-compiler:0.2.0'
+    compile 'info.izumin.android:eventemitter:0.2.0'
 }
 ```
 
@@ -34,7 +36,14 @@ ConnectionEventEmitter emitter = new ConnectionEventEmitter();
 
 emitter.on(connectionListenerImpl);
 
-emitter.onConnect(); // Call onCreate() for all registered listeners
+emitter.emitOnConnect(); // Call onCreate() for all registered listeners
+
+new Thread(new Runnable() {
+    @Override
+    public void run() {
+        emitter.emitOnConnectOnUiThread() // Call onConnect on UI thread
+    }
+});
 ```
 
 ## Licenses
