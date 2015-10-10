@@ -1,5 +1,7 @@
 # EventEmitter for Android
 [![wercker status](https://app.wercker.com/status/21e3fb7f70933503c9a9faadba53eeff/s/master "wercker status")](https://app.wercker.com/project/bykey/21e3fb7f70933503c9a9faadba53eeff)
+[![Download](https://api.bintray.com/packages/izumin5210/maven/eventemitter/images/download.svg)](https://bintray.com/izumin5210/maven/eventemitter/_latestVersion)
+[![Download](https://api.bintray.com/packages/izumin5210/maven/eventemitter-compiler/images/download.svg)](https://bintray.com/izumin5210/maven/eventemitter-compiler/_latestVersion)
 
 ## Download
 
